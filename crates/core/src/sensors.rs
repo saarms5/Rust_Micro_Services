@@ -2,6 +2,7 @@
 
 use crate::component::{Component, ComponentResult};
 use async_trait::async_trait;
+use tokio_util::sync::CancellationToken;
 
 /// Example temperature sensor component
 #[derive(Debug)]
@@ -43,17 +44,24 @@ impl Component for TemperatureSensor {
         Ok(())
     }
 
-    async fn run(&mut self) -> ComponentResult<()> {
+    async fn run(&mut self, shutdown: CancellationToken) -> ComponentResult<()> {
         if !self.is_initialized {
             return Err(crate::component::ComponentError::new("Sensor not initialized"));
         }
-        
+
         println!("[{}] Running sensor loop...", self.name);
-        // Simulate sensor reading
+        // Simulate sensor reading; react to shutdown token
         for i in 0..5 {
-            self.current_value += 0.5;
-            println!("[{}] Reading {}: {:.1}°C", self.name, i + 1, self.current_value);
-            tokio::time::sleep(tokio::time::Duration::from_millis(200)).await;
+            tokio::select! {
+                _ = shutdown.cancelled() => {
+                    println!("[{}] Shutdown requested, stopping sensor loop", self.name);
+                    return Ok(());
+                }
+                _ = tokio::time::sleep(tokio::time::Duration::from_millis(200)) => {
+                    self.current_value += 0.5;
+                    println!("[{}] Reading {}: {:.1}°C", self.name, i + 1, self.current_value);
+                }
+            }
         }
         Ok(())
     }
@@ -113,19 +121,27 @@ impl Component for MotorActuator {
         Ok(())
     }
 
-    async fn run(&mut self) -> ComponentResult<()> {
+    async fn run(&mut self, shutdown: CancellationToken) -> ComponentResult<()> {
         if !self.is_initialized {
             return Err(crate::component::ComponentError::new("Motor not initialized"));
         }
-        
+
         println!("[{}] Starting motor...", self.name);
         self.is_running = true;
-        
+
         for speed in (0..=100).step_by(20) {
-            println!("[{}] Motor speed: {}%", self.name, speed);
-            tokio::time::sleep(tokio::time::Duration::from_millis(300)).await;
+            tokio::select! {
+                _ = shutdown.cancelled() => {
+                    println!("[{}] Shutdown requested, stopping motor...", self.name);
+                    self.is_running = false;
+                    return Ok(());
+                }
+                _ = tokio::time::sleep(tokio::time::Duration::from_millis(300)) => {
+                    println!("[{}] Motor speed: {}%", self.name, speed);
+                }
+            }
         }
-        
+
         println!("[{}] Stopping motor...", self.name);
         self.is_running = false;
         Ok(())

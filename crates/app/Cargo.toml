@@ -13,3 +13,13 @@ core = { path = "../core" }
 hal = { path = "../hal" }
 telemetry = { path = "../telemetry" }
 tokio = { version = "1", features = ["full"] }
+tokio-util = "0.7"
+
+[features]
+# Default to the Tokio runtime for Embedded Linux / general OS
+default = ["tokio_runtime"]
+tokio_runtime = []
+# RTIC firmware is provided as a scaffold in `crates/firmware`.
+# It is not part of the workspace members by default — enable/compile
+# separately for a suitable MCU target.
+rtic_firmware = []
