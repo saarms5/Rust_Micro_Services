@@ -4,6 +4,8 @@ members = [
     "crates/hal",
     "crates/telemetry",
     "crates/app",
+    "crates/demo_receiver",
+    "crates/demo_simulator",
 ]
 resolver = "2"
 
