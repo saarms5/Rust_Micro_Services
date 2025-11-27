@@ -6,3 +6,4 @@ license = "MIT"
 
 [dependencies]
 core = { path = "../core" }
+embedded-hal = "1.0"
