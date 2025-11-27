@@ -1,21 +1,23 @@
 //! Core logic module
-//! 
+//!
 //! This crate contains the core business logic and domain models
 //! for the microservices application.
 
 pub mod component;
-pub mod models;
-pub mod sensors;
-pub mod scheduler;
 pub mod control_loops;
+pub mod models;
+pub mod scheduler;
+pub mod sensors;
 
 #[cfg(feature = "mock_sensors")]
 pub mod mocks;
 
 pub use component::{Component, ComponentError, ComponentManager, ComponentResult};
-pub use sensors::{MotorActuator, TemperatureSensor};
-pub use scheduler::{ControlLoopTask, RealTimeLoop, MixedPriorityRuntime, SchedulerResult, SchedulerError};
 pub use control_loops::{ExampleControlLoop, PidControlLoop};
+pub use scheduler::{
+    ControlLoopTask, MixedPriorityRuntime, RealTimeLoop, SchedulerError, SchedulerResult,
+};
+pub use sensors::{MotorActuator, TemperatureSensor};
 
 #[cfg(feature = "mock_sensors")]
 pub use mocks::{MockBarometerSensor, MockGpsSensor, MockImuSensor};

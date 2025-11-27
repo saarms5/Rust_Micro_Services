@@ -54,10 +54,19 @@ impl MqttTransport {
         let file_path = path.clone();
         let handle = tokio::spawn(async move {
             // open in append mode
-            let mut file = match OpenOptions::new().create(true).append(true).open(&file_path).await {
+            let mut file = match OpenOptions::new()
+                .create(true)
+                .append(true)
+                .open(&file_path)
+                .await
+            {
                 Ok(f) => f,
                 Err(e) => {
-                    eprintln!("MqttTransport failed to open file {}: {}", file_path.display(), e);
+                    eprintln!(
+                        "MqttTransport failed to open file {}: {}",
+                        file_path.display(),
+                        e
+                    );
                     return;
                 }
             };
@@ -75,7 +84,10 @@ impl MqttTransport {
             }
         });
 
-        Ok(Self { tx, _task_handle: Arc::new(handle) })
+        Ok(Self {
+            tx,
+            _task_handle: Arc::new(handle),
+        })
     }
 }
 
@@ -83,10 +95,7 @@ impl MqttTransport {
 impl Transport for MqttTransport {
     async fn send(&self, packet: &TelemetryPacket) -> Result<(), TransportError> {
         let json = serde_json::to_string(packet)?;
-        self.tx
-            .send(json)
-            .await
-            .map_err(|_| TransportError::Closed)
+        self.tx.send(json).await.map_err(|_| TransportError::Closed)
     }
 }
 
@@ -114,10 +123,19 @@ impl SerialTransport {
         let file_path = path.clone();
 
         let handle = tokio::spawn(async move {
-            let mut file = match OpenOptions::new().create(true).append(true).open(&file_path).await {
+            let mut file = match OpenOptions::new()
+                .create(true)
+                .append(true)
+                .open(&file_path)
+                .await
+            {
                 Ok(f) => f,
                 Err(e) => {
-                    eprintln!("SerialTransport failed to open file {}: {}", file_path.display(), e);
+                    eprintln!(
+                        "SerialTransport failed to open file {}: {}",
+                        file_path.display(),
+                        e
+                    );
                     return;
                 }
             };
@@ -133,7 +151,10 @@ impl SerialTransport {
             }
         });
 
-        Ok(Self { tx, _task_handle: Arc::new(handle) })
+        Ok(Self {
+            tx,
+            _task_handle: Arc::new(handle),
+        })
     }
 }
 
@@ -141,21 +162,20 @@ impl SerialTransport {
 impl Transport for SerialTransport {
     async fn send(&self, packet: &TelemetryPacket) -> Result<(), TransportError> {
         let json = serde_json::to_string(packet)?;
-        self.tx
-            .send(json)
-            .await
-            .map_err(|_| TransportError::Closed)
+        self.tx.send(json).await.map_err(|_| TransportError::Closed)
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{TelemetryPacket, SystemHealth};
+    use crate::{SystemHealth, TelemetryPacket};
 
     #[tokio::test]
     async fn test_mqtt_transport_send() {
-        let transport = MqttTransport::new(Some(PathBuf::from("target/test_output/mqtt_test.log"))).await.unwrap();
+        let transport = MqttTransport::new(Some(PathBuf::from("target/test_output/mqtt_test.log")))
+            .await
+            .unwrap();
         let packet = TelemetryPacket {
             sequence: 1,
             timestamp: chrono::Utc::now(),
@@ -169,7 +189,10 @@ mod tests {
 
     #[tokio::test]
     async fn test_serial_transport_send() {
-        let transport = SerialTransport::new(Some(PathBuf::from("target/test_output/serial_test.log"))).await.unwrap();
+        let transport =
+            SerialTransport::new(Some(PathBuf::from("target/test_output/serial_test.log")))
+                .await
+                .unwrap();
         let packet = TelemetryPacket {
             sequence: 2,
             timestamp: chrono::Utc::now(),

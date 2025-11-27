@@ -4,8 +4,8 @@
 //! at guaranteed frequencies (e.g., 100Hz) while handling lower-priority async
 //! tasks concurrently.
 
-use std::time::{Duration, Instant};
 use std::sync::Arc;
+use std::time::{Duration, Instant};
 use tokio::sync::Mutex;
 use tokio_util::sync::CancellationToken;
 

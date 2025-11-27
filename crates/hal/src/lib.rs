@@ -7,11 +7,11 @@
 //! and provides register-based wrappers to ensure type-safe MCU interactions.
 
 pub mod device;
-pub mod traits;
-pub mod registers;
 pub mod peripherals;
+pub mod registers;
+pub mod traits;
 
 pub use device::Device;
-pub use traits::HalTrait;
+pub use peripherals::{GpioPin, SpiInterface, TimerUnit, UartPort};
 pub use registers::{Register, RegisterValue};
-pub use peripherals::{GpioPin, UartPort, SpiInterface, TimerUnit};
+pub use traits::HalTrait;

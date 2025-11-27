@@ -28,7 +28,7 @@ impl MockGpsSensor {
         Self {
             id: id.into(),
             name: name.into(),
-            latitude: 37.7749,   // San Francisco
+            latitude: 37.7749, // San Francisco
             longitude: -122.4194,
             altitude: 0.0,
             satellites: 0,
@@ -115,7 +115,9 @@ impl Component for MockGpsSensor {
             return Err(crate::component::ComponentError::new("GPS not initialized"));
         }
         if self.satellites < 4 {
-            return Err(crate::component::ComponentError::new("Insufficient satellite lock"));
+            return Err(crate::component::ComponentError::new(
+                "Insufficient satellite lock",
+            ));
         }
         Ok(())
     }
@@ -243,7 +245,9 @@ impl Component for MockImuSensor {
         }
         // Check temperature is within operating range
         if self.temperature < -40.0 || self.temperature > 85.0 {
-            return Err(crate::component::ComponentError::new("IMU temperature out of range"));
+            return Err(crate::component::ComponentError::new(
+                "IMU temperature out of range",
+            ));
         }
         Ok(())
     }
@@ -257,9 +261,9 @@ impl Component for MockImuSensor {
 pub struct MockBarometerSensor {
     id: String,
     name: String,
-    pressure: f32,      // in hPa
-    temperature: f32,   // in °C
-    altitude: f32,      // in meters
+    pressure: f32,    // in hPa
+    temperature: f32, // in °C
+    altitude: f32,    // in meters
     is_initialized: bool,
 }
 
@@ -296,7 +300,9 @@ impl Component for MockBarometerSensor {
 
     async fn run(&mut self, shutdown: CancellationToken) -> ComponentResult<()> {
         if !self.is_initialized {
-            return Err(crate::component::ComponentError::new("Barometer not initialized"));
+            return Err(crate::component::ComponentError::new(
+                "Barometer not initialized",
+            ));
         }
 
         println!("[{}] Reading atmospheric data...", self.name);
@@ -343,10 +349,14 @@ impl Component for MockBarometerSensor {
 
     async fn health_check(&self) -> ComponentResult<()> {
         if !self.is_initialized {
-            return Err(crate::component::ComponentError::new("Barometer not initialized"));
+            return Err(crate::component::ComponentError::new(
+                "Barometer not initialized",
+            ));
         }
         if self.pressure < 300.0 || self.pressure > 1100.0 {
-            return Err(crate::component::ComponentError::new("Barometer pressure out of range"));
+            return Err(crate::component::ComponentError::new(
+                "Barometer pressure out of range",
+            ));
         }
         Ok(())
     }

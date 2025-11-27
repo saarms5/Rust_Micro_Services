@@ -78,12 +78,7 @@ impl TelemetryCollector {
     /// Get recent sensor readings
     pub async fn get_sensor_readings(&self, limit: usize) -> Vec<SensorReading> {
         let readings = self.sensor_readings.lock().await;
-        readings
-            .iter()
-            .rev()
-            .take(limit)
-            .cloned()
-            .collect()
+        readings.iter().rev().take(limit).cloned().collect()
     }
 
     /// Clear all telemetry data
@@ -127,11 +122,7 @@ mod tests {
     #[tokio::test]
     async fn test_collector_diagnostic() {
         let collector = TelemetryCollector::new();
-        let entry = DiagnosticEntry::new(
-            DiagnosticLevel::Info,
-            "sys".to_string(),
-            "Test event",
-        );
+        let entry = DiagnosticEntry::new(DiagnosticLevel::Info, "sys".to_string(), "Test event");
 
         collector.record_diagnostic(entry).await;
         let packet = collector.generate_packet().await;

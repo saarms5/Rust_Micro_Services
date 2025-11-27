@@ -8,7 +8,10 @@ fn serialize_bench(c: &mut Criterion) {
         packet.sensor_readings.push(telemetry::SensorReading::new(
             format!("sensor-{}", i),
             format!("Sensor {}", i),
-            telemetry::SensorData::Temperature { value: 20.0 + i as f32 * 0.1, unit: "C".to_string() },
+            telemetry::SensorData::Temperature {
+                value: 20.0 + i as f32 * 0.1,
+                unit: "C".to_string(),
+            },
             i,
         ));
     }

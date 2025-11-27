@@ -19,7 +19,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         pkt.diagnostics = diag;
 
         let client = reqwest::Client::new();
-        let res = client.post("http://127.0.0.1:3030/telemetry")
+        let res = client
+            .post("http://127.0.0.1:3030/telemetry")
             .json(&pkt)
             .send()
             .await;

@@ -1,5 +1,5 @@
 use rms_core::{ComponentManager, MotorActuator, TemperatureSensor};
-use telemetry::{Logger, LogLevel};
+use telemetry::{LogLevel, Logger};
 
 // Only include the runtime helper when the tokio runtime feature is enabled.
 #[cfg(feature = "tokio_runtime")]
@@ -30,7 +30,7 @@ async fn async_main() {
         // Register mock sensors if enabled
         #[cfg(feature = "mock_sensors")]
         {
-            use rms_core::{MockGpsSensor, MockImuSensor, MockBarometerSensor};
+            use rms_core::{MockBarometerSensor, MockGpsSensor, MockImuSensor};
             mgr.register(Box::new(MockGpsSensor::new("gps-001", "GPS Module")));
             mgr.register(Box::new(MockImuSensor::new("imu-001", "IMU Sensor")));
             mgr.register(Box::new(MockBarometerSensor::new("baro-001", "Barometer")));
@@ -62,11 +62,10 @@ async fn async_main() {
     // Optionally run real-time control loop if feature enabled
     #[cfg(feature = "realtime_loops")]
     {
-        use rms_core::{MixedPriorityRuntime, ExampleControlLoop};
+        use rms_core::{ExampleControlLoop, MixedPriorityRuntime};
 
         println!("\n--- Real-Time Control Loop (50Hz) ---");
-        let rt = MixedPriorityRuntime::new(50)
-            .expect("Failed to create real-time runtime");
+        let rt = MixedPriorityRuntime::new(50).expect("Failed to create real-time runtime");
         let rt_shutdown = rt.shutdown_token();
 
         let mut control_loop = ExampleControlLoop::new("MainControl");

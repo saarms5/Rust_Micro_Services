@@ -46,7 +46,9 @@ impl Component for TemperatureSensor {
 
     async fn run(&mut self, shutdown: CancellationToken) -> ComponentResult<()> {
         if !self.is_initialized {
-            return Err(crate::component::ComponentError::new("Sensor not initialized"));
+            return Err(crate::component::ComponentError::new(
+                "Sensor not initialized",
+            ));
         }
 
         println!("[{}] Running sensor loop...", self.name);
@@ -74,10 +76,14 @@ impl Component for TemperatureSensor {
 
     async fn health_check(&self) -> ComponentResult<()> {
         if !self.is_initialized {
-            return Err(crate::component::ComponentError::new("Sensor not initialized"));
+            return Err(crate::component::ComponentError::new(
+                "Sensor not initialized",
+            ));
         }
         if self.current_value > 100.0 || self.current_value < -50.0 {
-            return Err(crate::component::ComponentError::new("Temperature out of range"));
+            return Err(crate::component::ComponentError::new(
+                "Temperature out of range",
+            ));
         }
         Ok(())
     }
@@ -123,7 +129,9 @@ impl Component for MotorActuator {
 
     async fn run(&mut self, shutdown: CancellationToken) -> ComponentResult<()> {
         if !self.is_initialized {
-            return Err(crate::component::ComponentError::new("Motor not initialized"));
+            return Err(crate::component::ComponentError::new(
+                "Motor not initialized",
+            ));
         }
 
         println!("[{}] Starting motor...", self.name);
@@ -158,7 +166,9 @@ impl Component for MotorActuator {
 
     async fn health_check(&self) -> ComponentResult<()> {
         if !self.is_initialized {
-            return Err(crate::component::ComponentError::new("Motor not initialized"));
+            return Err(crate::component::ComponentError::new(
+                "Motor not initialized",
+            ));
         }
         Ok(())
     }

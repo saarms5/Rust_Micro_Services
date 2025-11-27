@@ -1,6 +1,6 @@
-use telemetry::{PipelineConfig, StreamingPipeline, TelemetryPacket, SystemHealth};
 use std::path::PathBuf;
 use std::time::{Duration, Instant};
+use telemetry::{PipelineConfig, StreamingPipeline, SystemHealth, TelemetryPacket};
 
 #[tokio::test]
 async fn e2e_pipeline_runs_and_sends() {
@@ -18,10 +18,14 @@ async fn e2e_pipeline_runs_and_sends() {
     let out_path = PathBuf::from("target/test_output/e2e_mqtt.log");
 
     // Create a real MqttTransport wrapped in PipelineTransport
-    let mqtt = telemetry::MqttTransport::new(Some(out_path.clone())).await.expect("mqtt transport");
+    let mqtt = telemetry::MqttTransport::new(Some(out_path.clone()))
+        .await
+        .expect("mqtt transport");
     let transports = vec![telemetry::streaming::PipelineTransport::Mqtt(mqtt)];
 
-    let pipeline = StreamingPipeline::new(config, transports).await.expect("pipeline");
+    let pipeline = StreamingPipeline::new(config, transports)
+        .await
+        .expect("pipeline");
     let sender = pipeline.get_sender();
 
     // Spawn a producer that generates telemetry for `run_duration`.
@@ -51,6 +55,11 @@ async fn e2e_pipeline_runs_and_sends() {
     tokio::time::sleep(Duration::from_secs(1)).await;
 
     // Check output file exists and has content
-    let content = tokio::fs::read_to_string(out_path).await.expect("read out file");
-    assert!(!content.trim().is_empty(), "Expected telemetry output in file");
+    let content = tokio::fs::read_to_string(out_path)
+        .await
+        .expect("read out file");
+    assert!(
+        !content.trim().is_empty(),
+        "Expected telemetry output in file"
+    );
 }

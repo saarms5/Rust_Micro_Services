@@ -117,9 +117,19 @@ pub enum SensorData {
         accuracy: f32,
     },
     /// Accelerometer reading (3-axis)
-    Accelerometer { x: f32, y: f32, z: f32, unit: String },
+    Accelerometer {
+        x: f32,
+        y: f32,
+        z: f32,
+        unit: String,
+    },
     /// Gyroscope reading (3-axis)
-    Gyroscope { x: f32, y: f32, z: f32, unit: String },
+    Gyroscope {
+        x: f32,
+        y: f32,
+        z: f32,
+        unit: String,
+    },
     /// Generic analog value
     Analog { value: f32, unit: String },
     /// Generic digital state
@@ -460,19 +470,17 @@ mod tests {
     fn test_telemetry_packet_roundtrip() {
         let mut packet = TelemetryPacket::new(1);
         packet.health.healthy_components = 10;
-        packet
-            .sensor_readings
-            .push(SensorReading::new(
-                "gps-001".to_string(),
-                "GPS".to_string(),
-                SensorData::Gps {
-                    latitude: 37.7749,
-                    longitude: -122.4194,
-                    altitude: 50.0,
-                    accuracy: 2.5,
-                },
-                1,
-            ));
+        packet.sensor_readings.push(SensorReading::new(
+            "gps-001".to_string(),
+            "GPS".to_string(),
+            SensorData::Gps {
+                latitude: 37.7749,
+                longitude: -122.4194,
+                altitude: 50.0,
+                accuracy: 2.5,
+            },
+            1,
+        ));
 
         let json = packet.to_json().unwrap();
         let restored = TelemetryPacket::from_json(&json).unwrap();

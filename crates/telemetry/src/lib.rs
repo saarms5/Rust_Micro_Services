@@ -1,21 +1,21 @@
 //! Telemetry and monitoring module
-//! 
+//!
 //! This crate handles logging, metrics, observability, and telemetry schema
 //! for the microservices application.
 
+pub mod collector;
 pub mod logger;
 pub mod metrics;
-pub mod types;
-pub mod collector;
-pub mod transports;
 pub mod streaming;
+pub mod transports;
+pub mod types;
 
-pub use logger::{Logger, LogLevel};
-pub use metrics::Metrics;
-pub use types::{
-    SystemHealth, HealthStatus, SensorData, SensorReading, DiagnosticEntry, DiagnosticLevel,
-    DiagnosticsReport, TelemetryPacket, ComponentId, Timestamp,
-};
 pub use collector::TelemetryCollector;
-pub use transports::{Transport, TransportError, MqttTransport, SerialTransport};
-pub use streaming::{StreamingPipeline, PipelineConfig};
+pub use logger::{LogLevel, Logger};
+pub use metrics::Metrics;
+pub use streaming::{PipelineConfig, StreamingPipeline};
+pub use transports::{MqttTransport, SerialTransport, Transport, TransportError};
+pub use types::{
+    ComponentId, DiagnosticEntry, DiagnosticLevel, DiagnosticsReport, HealthStatus, SensorData,
+    SensorReading, SystemHealth, TelemetryPacket, Timestamp,
+};

@@ -103,11 +103,7 @@ impl UartPort {
         if !self.is_open {
             return Err("UART port not open".to_string());
         }
-        println!(
-            "[UART {}] Writing {} bytes",
-            self.port_num,
-            data.len()
-        );
+        println!("[UART {}] Writing {} bytes", self.port_num, data.len());
         Ok(())
     }
 
@@ -163,7 +159,11 @@ impl SpiInterface {
         if !self.is_active {
             return Err("SPI bus not initialized".to_string());
         }
-        println!("[SPI {}] Transferring {} bytes", self.bus_num, tx_data.len());
+        println!(
+            "[SPI {}] Transferring {} bytes",
+            self.bus_num,
+            tx_data.len()
+        );
         // Echo back the data for demonstration
         Ok(tx_data.to_vec())
     }

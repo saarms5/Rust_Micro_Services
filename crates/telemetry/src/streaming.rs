@@ -5,13 +5,13 @@
 //! batches them, optionally compresses, and sends via configurable transports—all without
 //! blocking the main control loop.
 
+use crate::transports::{MqttTransport, SerialTransport, Transport, TransportError};
 use crate::TelemetryPacket;
-use crate::transports::{Transport, TransportError, MqttTransport, SerialTransport};
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use std::time::{Duration, Instant};
 use thiserror::Error;
-use tokio::sync::mpsc::{self, Sender, Receiver};
+use tokio::sync::mpsc::{self, Receiver, Sender};
 use tokio::time::sleep;
 
 /// Error type for streaming pipeline operations
@@ -222,7 +222,10 @@ impl StreamingPipeline {
                     .iter()
                     .flat_map(|p| p.sensor_readings.clone())
                     .collect(),
-                diagnostics: batch.first().map(|p| p.diagnostics.clone()).unwrap_or_default(),
+                diagnostics: batch
+                    .first()
+                    .map(|p| p.diagnostics.clone())
+                    .unwrap_or_default(),
             };
             send_futures.push(transport.send(Box::leak(Box::new(packet))));
         }
@@ -237,7 +240,7 @@ impl StreamingPipeline {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{SystemHealth, DiagnosticsReport};
+    use crate::{DiagnosticsReport, SystemHealth};
     use std::path::PathBuf;
 
     #[tokio::test]
