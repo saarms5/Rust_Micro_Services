@@ -23,3 +23,5 @@ tokio_runtime = []
 # It is not part of the workspace members by default — enable/compile
 # separately for a suitable MCU target.
 rtic_firmware = []
+# Enable mock sensors for development without hardware
+mock_sensors = ["core/mock_sensors"]

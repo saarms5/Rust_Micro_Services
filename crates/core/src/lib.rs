@@ -7,8 +7,14 @@ pub mod component;
 pub mod models;
 pub mod sensors;
 
+#[cfg(feature = "mock_sensors")]
+pub mod mocks;
+
 pub use component::{Component, ComponentError, ComponentManager, ComponentResult};
 pub use sensors::{MotorActuator, TemperatureSensor};
+
+#[cfg(feature = "mock_sensors")]
+pub use mocks::{MockBarometerSensor, MockGpsSensor, MockImuSensor};
 
 pub fn add(left: usize, right: usize) -> usize {
     left + right

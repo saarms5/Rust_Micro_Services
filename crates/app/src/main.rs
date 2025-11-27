@@ -26,6 +26,16 @@ async fn async_main() {
         let mut mgr = manager.lock().await;
         mgr.register(sensor);
         mgr.register(motor);
+
+        // Register mock sensors if enabled
+        #[cfg(feature = "mock_sensors")]
+        {
+            use core::{MockGpsSensor, MockImuSensor, MockBarometerSensor};
+            mgr.register(Box::new(MockGpsSensor::new("gps-001", "GPS Module")));
+            mgr.register(Box::new(MockImuSensor::new("imu-001", "IMU Sensor")));
+            mgr.register(Box::new(MockBarometerSensor::new("baro-001", "Barometer")));
+            logger.log(LogLevel::Info, "Mock sensors registered");
+        }
     }
 
     // Initialize all components
