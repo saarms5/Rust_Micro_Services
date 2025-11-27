@@ -1,0 +1,15 @@
+[package]
+name = "app"
+version.workspace = true
+edition.workspace = true
+license = "MIT"
+
+[[bin]]
+name = "app"
+path = "src/main.rs"
+
+[dependencies]
+core = { path = "../core" }
+hal = { path = "../hal" }
+telemetry = { path = "../telemetry" }
+tokio = { version = "1", features = ["full"] }

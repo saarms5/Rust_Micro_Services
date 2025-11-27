@@ -1,0 +1,46 @@
+﻿# Cargo deny configuration for Pure Rust Microservices
+# Ensures all dependencies are pure Rust
+# Bans C/C++ build dependencies and related tools
+
+[graph]
+# Uncomment and adjust targets if needed
+# targets = [
+#     "x86_64-pc-windows-msvc",
+#     "x86_64-unknown-linux-gnu",
+# ]
+
+[licenses]
+# Explicitly allowed licenses for pure Rust ecosystem
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "Unicode-3.0",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+]
+confidence-threshold = 0.8
+
+[bans]
+# Warn when multiple versions of same crate are detected
+multiple-versions = "warn"
+# Allow wildcards in version requirements
+wildcards = "warn"
+# Deny C/C++ build tools and related dependencies
+deny = [
+    { name = "cmake", reason = "C/C++ build tool, violates pure Rust requirement" },
+    { name = "cc", reason = "C/C++ compiler, violates pure Rust requirement" },
+    { name = "pkg-config", reason = "C/C++ configuration tool, violates pure Rust requirement" },
+    { name = "bindgen", reason = "C FFI generation, violates pure Rust requirement" },
+    { name = "nasm", reason = "Assembly compiler, violates pure Rust requirement" },
+    { name = "yasm", reason = "Assembly compiler, violates pure Rust requirement" },
+]
+
+[sources]
+# Warn on unknown registries
+unknown-registry = "warn"
+# Warn on unknown git sources
+unknown-git = "warn"
+# Allow only crates.io
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+allow-git = []
