@@ -8,6 +8,7 @@ pub mod metrics;
 pub mod types;
 pub mod collector;
 pub mod transports;
+pub mod streaming;
 
 pub use logger::{Logger, LogLevel};
 pub use metrics::Metrics;
@@ -16,3 +17,5 @@ pub use types::{
     DiagnosticsReport, TelemetryPacket, ComponentId, Timestamp,
 };
 pub use collector::TelemetryCollector;
+pub use transports::{Transport, TransportError, MqttTransport, SerialTransport};
+pub use streaming::{StreamingPipeline, PipelineConfig};
