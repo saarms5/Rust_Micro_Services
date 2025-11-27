@@ -9,7 +9,7 @@ name = "app"
 path = "src/main.rs"
 
 [dependencies]
-core = { path = "../core" }
+rms_core = { path = "../core" }
 hal = { path = "../hal" }
 telemetry = { path = "../telemetry" }
 tokio = { version = "1", features = ["full"] }
@@ -24,6 +24,6 @@ tokio_runtime = []
 # separately for a suitable MCU target.
 rtic_firmware = []
 # Enable mock sensors for development without hardware
-mock_sensors = ["core/mock_sensors"]
+mock_sensors = ["rms_core/mock_sensors"]
 # Enable real-time control loops (100Hz by default)
 realtime_loops = []

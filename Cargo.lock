@@ -42,8 +42,8 @@ checksum = "5192cca8006f1fd4f7237516f40fa183bb07f8fbdfedaa0036de5ea9b0b45e78"
 name = "app"
 version = "0.1.0"
 dependencies = [
- "core",
  "hal",
+ "rms_core",
  "telemetry",
  "tokio",
  "tokio-util",
@@ -228,16 +228,6 @@ name = "compression-core"
 version = "0.4.31"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "75984efb6ed102a0d42db99afb6c1948f0380d1d91808d5529916e6c08b49d8d"
-
-[[package]]
-name = "core"
-version = "0.1.0"
-dependencies = [
- "async-trait",
- "criterion",
- "tokio",
- "tokio-util",
-]
 
 [[package]]
 name = "core-foundation"
@@ -633,8 +623,8 @@ dependencies = [
 name = "hal"
 version = "0.1.0"
 dependencies = [
- "core",
  "embedded-hal",
+ "rms_core",
 ]
 
 [[package]]
@@ -1384,6 +1374,16 @@ dependencies = [
  "wasm-bindgen-futures",
  "web-sys",
  "winreg",
+]
+
+[[package]]
+name = "rms_core"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "criterion",
+ "tokio",
+ "tokio-util",
 ]
 
 [[package]]

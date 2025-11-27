@@ -1,4 +1,4 @@
-use core::{ComponentManager, MotorActuator, TemperatureSensor};
+use rms_core::{ComponentManager, MotorActuator, TemperatureSensor};
 use telemetry::{Logger, LogLevel};
 
 // Only include the runtime helper when the tokio runtime feature is enabled.
@@ -30,7 +30,7 @@ async fn async_main() {
         // Register mock sensors if enabled
         #[cfg(feature = "mock_sensors")]
         {
-            use core::{MockGpsSensor, MockImuSensor, MockBarometerSensor};
+            use rms_core::{MockGpsSensor, MockImuSensor, MockBarometerSensor};
             mgr.register(Box::new(MockGpsSensor::new("gps-001", "GPS Module")));
             mgr.register(Box::new(MockImuSensor::new("imu-001", "IMU Sensor")));
             mgr.register(Box::new(MockBarometerSensor::new("baro-001", "Barometer")));
@@ -62,7 +62,7 @@ async fn async_main() {
     // Optionally run real-time control loop if feature enabled
     #[cfg(feature = "realtime_loops")]
     {
-        use core::{MixedPriorityRuntime, ExampleControlLoop};
+        use rms_core::{MixedPriorityRuntime, ExampleControlLoop};
 
         println!("\n--- Real-Time Control Loop (50Hz) ---");
         let rt = MixedPriorityRuntime::new(50)

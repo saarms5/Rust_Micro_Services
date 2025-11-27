@@ -5,5 +5,5 @@ edition.workspace = true
 license = "MIT"
 
 [dependencies]
-core = { path = "../core" }
+rms_core = { path = "../core" }
 embedded-hal = "1.0"
