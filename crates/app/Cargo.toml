@@ -25,3 +25,5 @@ tokio_runtime = []
 rtic_firmware = []
 # Enable mock sensors for development without hardware
 mock_sensors = ["core/mock_sensors"]
+# Enable real-time control loops (100Hz by default)
+realtime_loops = []

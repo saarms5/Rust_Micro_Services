@@ -59,6 +59,29 @@ async fn async_main() {
         }
     }
 
+    // Optionally run real-time control loop if feature enabled
+    #[cfg(feature = "realtime_loops")]
+    {
+        use core::{MixedPriorityRuntime, ExampleControlLoop};
+
+        println!("\n--- Real-Time Control Loop (50Hz) ---");
+        let rt = MixedPriorityRuntime::new(50)
+            .expect("Failed to create real-time runtime");
+        let rt_shutdown = rt.shutdown_token();
+
+        let mut control_loop = ExampleControlLoop::new("MainControl");
+
+        // Spawn real-time loop in background
+        let rt_handle = tokio::spawn(async move {
+            if let Err(e) = rt.run_control_loop(&mut control_loop, rt_shutdown).await {
+                eprintln!("Real-time loop error: {}", e);
+            }
+        });
+
+        // Store handle for later
+        let _rt_handle = rt_handle;
+    }
+
     // Run all components with Ctrl-C graceful shutdown support
     println!("\n--- Execution Phase ---");
 
