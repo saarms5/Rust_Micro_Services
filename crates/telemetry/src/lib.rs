@@ -7,6 +7,7 @@ pub mod logger;
 pub mod metrics;
 pub mod types;
 pub mod collector;
+pub mod transports;
 
 pub use logger::{Logger, LogLevel};
 pub use metrics::Metrics;
