@@ -12,3 +12,6 @@ tokio-util = "0.7"
 [features]
 # Enable mock sensor implementations for development without hardware
 mock_sensors = []
+
+[dev-dependencies]
+criterion = "0.5"
