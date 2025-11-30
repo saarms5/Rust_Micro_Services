@@ -13,12 +13,18 @@ flate2 = "1.0"
 tokio = { version = "1", features = ["sync", "macros", "rt", "fs", "io-util", "time"] }
 futures = "0.3"
 async-trait = "0.1"
+rumqttc = { version = "0.24", optional = true }
+backoff = { version = "0.4", features = ["tokio"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", optional = true }
 
 [features]
 # Real MQTT implementation (optional)
-mqtt_real = []
+mqtt_real = ["rumqttc"]
 # Real serial/uart implementation (optional)
 serial_real = []
+# Tracing support
+tracing_support = ["tracing-subscriber"]
 
 [dev-dependencies]
 criterion = "0.5"

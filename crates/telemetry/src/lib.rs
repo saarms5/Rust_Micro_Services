@@ -10,6 +10,9 @@ pub mod streaming;
 pub mod transports;
 pub mod types;
 
+#[cfg(feature = "mqtt_real")]
+pub mod mqtt_real;
+
 pub use collector::TelemetryCollector;
 pub use logger::{LogLevel, Logger};
 pub use metrics::Metrics;
@@ -19,3 +22,6 @@ pub use types::{
     ComponentId, DiagnosticEntry, DiagnosticLevel, DiagnosticsReport, HealthStatus, SensorData,
     SensorReading, SystemHealth, TelemetryPacket, Timestamp,
 };
+
+#[cfg(feature = "mqtt_real")]
+pub use mqtt_real::{MqttConfig, MqttError, RealMqttTransport};
