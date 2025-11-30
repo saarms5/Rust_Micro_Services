@@ -11,6 +11,7 @@ async fn e2e_pipeline_runs_and_sends() {
         batch_size: 5,
         batch_timeout_secs: 2,
         enable_compression: false,
+        enable_resilience: true,
         channel_capacity: 1024,
     };
 
