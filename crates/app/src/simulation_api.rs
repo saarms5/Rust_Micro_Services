@@ -457,7 +457,9 @@ mod tests {
         let engine = SimulationEngine::new(SimulationConfig::default())
             .await
             .unwrap();
-        let result = engine.register_sensor("temp-001", "TemperatureSensor").await;
+        let result = engine
+            .register_sensor("temp-001", "TemperatureSensor")
+            .await;
         assert!(result.is_ok());
     }
 
