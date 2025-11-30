@@ -1,6 +1,9 @@
 use rms_core::{ComponentManager, MotorActuator, TemperatureSensor};
 use telemetry::{LogLevel, Logger};
 
+// Simulation API for external teams
+pub mod simulation_api;
+
 // Only include the runtime helper when the tokio runtime feature is enabled.
 #[cfg(feature = "tokio_runtime")]
 mod runtime;

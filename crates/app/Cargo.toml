@@ -14,6 +14,8 @@ hal = { path = "../hal" }
 telemetry = { path = "../telemetry" }
 tokio = { version = "1", features = ["full"] }
 tokio-util = "0.7"
+serde = { version = "1", features = ["derive"] }
+chrono = { version = "0.4", features = ["serde"] }
 
 [features]
 # Default to the Tokio runtime for Embedded Linux / general OS
