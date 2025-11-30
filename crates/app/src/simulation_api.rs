@@ -7,7 +7,7 @@
 //! # Example Usage
 //!
 //! ```no_run
-//! use simulation_api::{SimulationEngine, SimulationConfig, SensorData};
+//! use app::{SimulationEngine, SimulationConfig, SensorData};
 //! use std::sync::Arc;
 //! use tokio::sync::Mutex;
 //!
