@@ -4,12 +4,12 @@
 //! to ensure reliable delivery even under adverse conditions.
 
 use crate::TelemetryPacket;
+use serde::{Deserialize, Serialize};
 use std::sync::atomic::{AtomicU32, Ordering};
 use std::sync::Arc;
 use std::time::Duration;
 use thiserror::Error;
 use tokio::sync::RwLock;
-use serde::{Deserialize, Serialize};
 
 /// Resilience error types
 #[derive(Error, Debug)]

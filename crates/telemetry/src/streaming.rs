@@ -264,7 +264,10 @@ impl StreamingPipeline {
                     for packet in batch {
                         ob.push(packet.clone()).await.ok(); // ignore buffer full
                     }
-                    tracing::warn!("Circuit breaker open, buffered {} packets offline", batch.len());
+                    tracing::warn!(
+                        "Circuit breaker open, buffered {} packets offline",
+                        batch.len()
+                    );
                     return Ok(());
                 }
             }

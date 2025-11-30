@@ -6,8 +6,8 @@
 //! - Environment variables (TELEMETRY_* prefix)
 //! - Programmatic defaults
 
-use crate::PipelineConfig;
 use crate::resilience::ResilienceConfig;
+use crate::PipelineConfig;
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
 use thiserror::Error;

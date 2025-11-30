@@ -19,7 +19,9 @@ pub use collector::TelemetryCollector;
 pub use config::{ConfigError, ConfigLoader, TelemetryConfig};
 pub use logger::{LogLevel, Logger};
 pub use metrics::Metrics;
-pub use resilience::{CircuitBreaker, CircuitState, OfflineBuffer, ResilienceConfig, RetryStrategy};
+pub use resilience::{
+    CircuitBreaker, CircuitState, OfflineBuffer, ResilienceConfig, RetryStrategy,
+};
 pub use streaming::{PipelineConfig, StreamingPipeline};
 pub use transports::{MqttTransport, SerialTransport, Transport, TransportError};
 pub use types::{

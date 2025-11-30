@@ -119,11 +119,8 @@ impl RealMqttTransport {
         let rx_handle_arc = self.rx_handle.clone();
 
         retry(backoff, || async {
-            let mut mqtt_opts = MqttOptions::new(
-                config.client_id.clone(),
-                config.host.clone(),
-                config.port,
-            );
+            let mut mqtt_opts =
+                MqttOptions::new(config.client_id.clone(), config.host.clone(), config.port);
             mqtt_opts.set_keep_alive(Duration::from_secs(config.keep_alive_secs));
 
             // Configure TLS if needed
@@ -242,9 +239,7 @@ impl Transport for RealMqttTransport {
 
             c.publish(self.config.topic.clone(), qos, false, json)
                 .await
-                .map_err(|e| {
-                    super::TransportError::Other(format!("MQTT publish failed: {}", e))
-                })?;
+                .map_err(|e| super::TransportError::Other(format!("MQTT publish failed: {}", e)))?;
             Ok(())
         } else {
             Err(super::TransportError::Other(
