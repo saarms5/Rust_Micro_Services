@@ -4,6 +4,7 @@
 //! for the microservices application.
 
 pub mod collector;
+pub mod config;
 pub mod logger;
 pub mod metrics;
 pub mod resilience;
@@ -15,6 +16,7 @@ pub mod types;
 pub mod mqtt_real;
 
 pub use collector::TelemetryCollector;
+pub use config::{ConfigError, ConfigLoader, TelemetryConfig};
 pub use logger::{LogLevel, Logger};
 pub use metrics::Metrics;
 pub use resilience::{CircuitBreaker, CircuitState, OfflineBuffer, ResilienceConfig, RetryStrategy};
