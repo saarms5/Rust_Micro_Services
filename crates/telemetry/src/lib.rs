@@ -6,6 +6,7 @@
 pub mod collector;
 pub mod logger;
 pub mod metrics;
+pub mod resilience;
 pub mod streaming;
 pub mod transports;
 pub mod types;
@@ -16,6 +17,7 @@ pub mod mqtt_real;
 pub use collector::TelemetryCollector;
 pub use logger::{LogLevel, Logger};
 pub use metrics::Metrics;
+pub use resilience::{CircuitBreaker, CircuitState, OfflineBuffer, ResilienceConfig, RetryStrategy};
 pub use streaming::{PipelineConfig, StreamingPipeline};
 pub use transports::{MqttTransport, SerialTransport, Transport, TransportError};
 pub use types::{
