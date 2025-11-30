@@ -275,10 +275,7 @@ mod tests {
     #[tokio::test]
     async fn test_offline_buffer() {
         let buffer = OfflineBuffer::new(3);
-        let packet = TelemetryPacket::new(
-            crate::types::ComponentId::from("test"),
-            crate::types::Timestamp::now(),
-        );
+        let packet = TelemetryPacket::new(1);
 
         assert!(buffer.push(packet.clone()).await.is_ok());
         assert_eq!(buffer.len().await, 1);

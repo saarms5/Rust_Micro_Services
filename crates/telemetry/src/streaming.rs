@@ -337,6 +337,7 @@ mod tests {
             batch_size: 2,
             batch_timeout_secs: 1,
             enable_compression: false,
+            enable_resilience: false,
             channel_capacity: 256,
         };
 
